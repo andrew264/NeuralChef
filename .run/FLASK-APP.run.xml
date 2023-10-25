@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="FLASK" type="PythonConfigurationType" factoryName="Python">
-    <module name="farm-hub" />
+  <configuration default="false" name="FLASK-APP" type="PythonConfigurationType" factoryName="Python">
+    <module name="NeuralChef" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
