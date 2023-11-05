@@ -17,7 +17,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 image_classifier = None
-plants_dataframe = pd.read_csv("datasets/FARM_HUB.csv")
+plants_dataframe = pd.read_csv("datasets/NEURALCHEF.csv")
 
 
 def do_image_inference(image_base64: str) -> ImageResult:
@@ -28,11 +28,9 @@ def do_image_inference(image_base64: str) -> ImageResult:
     image = image.resize((256, 256))
     out = np.argmax(image_classifier.predict(np.array([image]), verbose=0), axis=1)[0]
     row = plants_dataframe.iloc[out]
-    class_name = row["CLASS"]
-    plant_name = row["PLANT_NAME"]
-    disease_name = row["DISEASE_NAME"]
+    class_name = row["CLASS_NAME"]
     description = row["DESCRIPTION"]
-    return ImageResult(class_name, plant_name, disease_name, description)
+    return ImageResult(class_name, description)
 
 
 class ImageInferenceRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -85,8 +83,8 @@ if __name__ == "__main__":
     with tf.device('/cpu:0'):
         image_classifier = CNeXt(num_classes=num_classes)
         image_classifier.build((1, 256, 256, 3))
-        if os.path.exists('models/CNeXt.h5'):
-            image_classifier.load_weights('models/CNeXt.h5')
+        if os.path.exists('models/image-model-weights.h5'):
+            image_classifier.load_weights('models/image-model-weights.h5')
         else:
             raise FileNotFoundError('Model weights not found.')
         image_classifier.predict(np.zeros((1, 256, 256, 3)))

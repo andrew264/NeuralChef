@@ -5,7 +5,7 @@ class CNeXt(tf.keras.Model):
     def __init__(self, num_classes: int):
         super(CNeXt, self).__init__()
         self.num_classes = num_classes
-        self.model_head = tf.keras.applications.ConvNeXtBase(
+        self.model_head = tf.keras.applications.ConvNeXtSmall(
             include_top=False
         )
         self.avg_pool = tf.keras.layers.GlobalAveragePooling2D()
