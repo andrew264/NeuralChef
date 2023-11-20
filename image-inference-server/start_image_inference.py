@@ -30,7 +30,9 @@ def do_image_inference(image_base64: str) -> ImageResult:
     row = plants_dataframe.iloc[out]
     class_name = row["CLASS_NAME"]
     description = row["DESCRIPTION"]
-    return ImageResult(class_name, description)
+    res = ImageResult(class_name, description)
+    print(f"Image Inference Result: {res}\n\n")
+    return res
 
 
 class ImageInferenceRequestHandler(http.server.BaseHTTPRequestHandler):
